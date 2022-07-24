@@ -25,7 +25,7 @@ app.post('/createBlog',async (req,res)=>{
     };
     try {
         const response = await db.createBlog(blog);
-        res.send(response);        
+        res.json(response);        
     } catch (error) {
         res.send(error);
         res.sendStatus(403);
@@ -45,7 +45,7 @@ app.patch('/editBlog',async (req,res)=>{
     }
     try {
         const response = await db.updateBlog(blog);
-        res.send(response);   
+        res.json(response);   
     } catch (error) {
         res.send(error);
         res.sendStatus(403);
