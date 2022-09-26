@@ -257,6 +257,4 @@ Otherwise please configure the mongo.config file to suit your mongoDb instance.
 
 ## Reference
 
-Issam Rafihi, [Linkedin](https://www.linkedin.com/in/issam-rafihi/)
-
 
