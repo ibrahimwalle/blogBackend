@@ -251,7 +251,7 @@ Incase the blog does not exist, or an error has occured, the expected response w
 
 The development of this API was aided by using a Docker mongoDb image!
 
-You may use the Docker compose file(mongo.yaml) in the root directory if you prefer to run they project like this.(NOT COMMITED YET!)
+You may use the Docker compose file(mongo.yaml) in the root directory if you prefer to run they project like this.
 
 Otherwise please configure the mongo.config file to suit your mongoDb instance.
 
