@@ -1,8 +1,17 @@
-const mongoose = require('mongoose');
-const uri = `mongodb+srv://ibrahim:Pt5DAwp1RmWOx58a@artasks.7ueff.mongodb.net/blogDb`
+import mongoose from 'mongoose';
+import { mongoConfig } from '../config/mongo.config.js';
 
-async function main() {
-    return mongoose.connect(uri);
+export const connection = async () =>{
+    
+    //Connection to Database and exception handling
+    try {
+        await mongoose.connect(mongoConfig.uri ,{
+            user: mongoConfig.user,
+            pass: mongoConfig.pass,
+            dbName: mongoConfig.dbName});        
+    } catch (error) {
+        console.log(error);
+        throw new Error("Connection to database failed!");
+    }   
+
 }
-
-module.exports = main
