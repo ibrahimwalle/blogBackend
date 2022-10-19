@@ -1,120 +1,260 @@
-# blogBackend
-A backend application for a blog website built with NodeJs and express, and powered by a MongoDb noSql database
+# Blog API v2
+Create and serve blogs using Blog API!
 
+Built with NodeJS, ExpressJS, and powered by a MongoDb noSQL database.
 
-DOCUMENTATION:
+## DOCUMENTATION:
 
-Get Blogs:
+### Set Up:
 
-  Request Type: GET
-  
-  URI: http://localhost:4000/getBlogs
-  
-  Parameters: none
-  
-  Response:
-  
-    Type: JSON Array: [...,{
-        _id: String,
-        category: String,
-        image_url: String,
-        post_date: String | Date,  
-        title: String,
-        body: String,
-        author: String,
-        author_title: String,
-        author_image: String
-    }]
-    
-    on Error: Error response, status code 403
-    
-  
-Create Blog:
+- [ ] Make sure you have NodeJs installed on your machine!
+- [ ] Clone the project and run the install command: ```npm install```
+- [ ] Set up a mongoDB instance, and configure the mongo.config file accordingly! More details at the bottom of the docs.
+- [ ] Start the project by running the command: ```npm start```
 
-  Request Type: POST
-  
-  URI: http://localhost:4000/createBlog
-  
-  Parameters: {
-  
-    category: {type: String,  required:true},
-    image_url: String,
-    post_date: {type: String, default: Date.now}, 
-    title: {type: String, required:true},
-    body: {type: String, required:true},
-    author: {type: String, required:true},
-    author_title: String,
-    author_image: String
-  }
-  
-  Response:
-  
-    Saved Blog
-    Type: JSON: {
-        _id: String,
-        category: String,
-        image_url: String,
-        post_date: String | Date,  
-        title: String,
-        body: String,
-        author: String,
-        author_title: String,
-        author_image: String
+## Making Requests: 
+
+The Default URI is 
+> http://localhost:3000
+
+You may change the port that the app listens to by supplying your preffered port in the constructor in the root index.js file!
+
+### POST Requests:
+
+Creating a Blog: 
+
+To create a blog you need to send a POST request to the relevant Endpoint: ```http://localhost:3000/blogs```
+
+The expected query is as follows: 
+```
+    title: required:true,
+    body: required:true,
+    category: required:true, default: 'Other',
+    author: required:true,
+    authorTitle: required:false, default: 'Author',
+    authorImg: required:false, default: 'https://picsum.photos/200/200',
+    imgUrl: required:false, default: 'https://picsum.photos/300/200',
+```
+If the supplied query is sufficient and the database has been setup correctly, The expected response from API will be as follows:
+```
+{
+    "timestamp": "26/09/2022, 18:45:10",
+    "statusCode": 201,
+    "httpStatus": "CREATED",
+    "message": "A new Blog has been Created!",
+    "data": {
+        "title": "A Test Blog",
+        "body": "Test blog body....",
+        "category": "Test",
+        "author": "Ibrahim",
+        "authorTitle": "Author",
+        "authorImg": "https://picsum.photos/200/200",
+        "imgUrl": "https://picsum.photos/300/200",
+        "postdate": "26/09/2022, 18:42:41",
+        "_id": "6331e526248e4e56794b8fcf",
+        "__v": 0
     }
-    
-    on Error: Error response, status code 403
-    
-Edit Blog:
+}
+```
+In case of an Error, the expected response will be: 
+```
+{
+    "timestamp": "26/09/2022, 18:46:39",
+    "statusCode": 500,
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "message": "An error has occurred!",
+    "data": {}
+}
+```
+Make sure that you have supplied the correct query in that case, or that your MongoDb instance is running correctly!
 
-  Request Type: PATCH
-  
-  URI: http://localhost:4000/editBlog
-  
-  Parameters: {
-  
-        id: String,
-        category: String,
-        image_url: String,
-        title: String,
-        body: String,
-        author: String,
-        author_title: String,
-        author_image: String
-    }
-    
-  Response:
-  
-    Edited Blog
-    Type: JSON: {
-        _id: String,
-        category: String,
-        image_url: String,
-        post_date: String | Date,  
-        title: String,
-        body: String,
-        author: String,
-        author_title: String,
-        author_image: String
-    }
-    on Error: Error response, status code 403    
-    
-Delete Blog:
+Error details are logged in the terminal for furthur inspection! 
 
-  Request Type: DELETE
-  
-  URI: http://localhost:4000/deleteBlog
-  
-  Parameters: {
-  
-        id: String
+### GET Requests:
+
+Fetching Blogs:
+
+To fetch the blogs, you need to send a GET request to the relevant Endpoint: ```http://localhost:3000/blogs```
+
+The expected response is as follows:
+```
+{
+    "timestamp": "26/09/2022, 18:51:31",
+    "statusCode": 200,
+    "httpStatus": "OK",
+    "message": "Blogs retrieved!",
+    "data": [
+    {
+    "timestamp": "26/09/2022, 18:45:10",
+    "statusCode": 201,
+    "httpStatus": "CREATED",
+    "message": "A new Blog has been Created!",
+    "data": {
+        "title": "A Test Blog",
+        "body": "Test blog body....",
+        "category": "Test",
+        "author": "Ibrahim",
+        "authorTitle": "Author",
+        "authorImg": "https://picsum.photos/200/200",
+        "imgUrl": "https://picsum.photos/300/200",
+        "postdate": "26/09/2022, 18:42:41",
+        "_id": "6331e526248e4e56794b8fcf",
+        "__v": 0
+    },
+    ...
+    ]
+}
+```
+The data property will contain an array of all the blogs in the database!
+
+If any error may occur, the expected response will be:
+```
+{
+    "timestamp": "26/09/2022, 18:46:39",
+    "statusCode": 500,
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "message": "An error has occurred!",
+    "data": {}
+}
+```
+
+Fetching a specific blog using its ID:
+
+To fetch the blog you need, you need to supply the ID in the GET request: ```http://localhost:3000/blogs/:blogId```
+
+Replace ":blogId" with the ID of the blog you are trying to fetch!
+
+The expected response if the correct ID is supplied is as follows:
+```
+{
+    "timestamp": "26/09/2022, 18:58:30",
+    "statusCode": 200,
+    "httpStatus": "OK",
+    "message": "Blog 6331e526248e4e56794b8fcf retrieved!",
+    "data": {
+        "_id": "6331e526248e4e56794b8fcf",
+        "title": "A Test Blog",
+        "body": "Test blog body....",
+        "category": "Test",
+        "author": "Ibrahim",
+        "authorTitle": "Author",
+        "authorImg": "https://picsum.photos/200/200",
+        "imgUrl": "https://picsum.photos/300/200",
+        "postdate": "26/09/2022, 18:42:41",
+        "__v": 0
     }
-    
-  Response:
-  
-    Saved Blog
-    Type: JSON && String: {
-      acknowlaged: boolean,
-      deletedCount: number
-    } && "Blog Deleted!" | " Delete Failed! Blog doesn't exist or has already been deleted"
-    
-    on Error: Error response, status code 403    
+}
+```
+
+Incase the blog does not exist, or an error has occured, the expected response will be:
+```
+{
+    "timestamp": "26/09/2022, 19:00:06",
+    "statusCode": 500,
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "message": "An error has occurred! or Blog does not exist!",
+    "data": {}
+}
+```
+
+
+### PUT Requests:
+
+Editing a Blog:
+
+
+To edit the blog you want, you need to supply the ID in the PUT request: ```http://localhost:3000/blogs/:blogId```
+
+Replace ":blogId" with the ID of the blog you are trying to edit!
+
+Supply the query with the details you want to edit, you are not expected to supply the whole query if you don't need to change everything. 
+The expected query properties are as follows: 
+```
+    title: ,
+    body: ,
+    category: ,
+    author: ,
+    authorTitle: ,
+    authorImg: ,
+    imgUrl: ,
+```
+
+The expected response if the correct ID and queries are supplied is as follows:
+```
+{
+    "timestamp": "26/09/2022, 19:07:07",
+    "statusCode": 201,
+    "httpStatus": "CREATED",
+    "message": "Blog 6331e526248e4e56794b8fcf has been Updated!",
+    "data": {
+        "_id": "6331e526248e4e56794b8fcf",
+        "title": "A Test Blog",
+        "body": "Test blog body....",
+        "category": "Test",
+        "author": "Ibrahim",
+        "authorTitle": "Author",
+        "authorImg": "https://picsum.photos/200/200",
+        "imgUrl": "https://picsum.photos/300/200",
+        "postdate": "26/09/2022, 18:42:41",
+        "__v": 0
+    }
+}
+```
+
+It is expected that the response data will reply with the blog before it has been updated, you will need to fetch the blog again if u want to see the updated details!
+
+
+Incase the blog does not exist, or an error has occured, the expected response will be:
+```
+{
+    "timestamp": "26/09/2022, 19:14:09",
+    "statusCode": 500,
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "message": "An error has occurred! or Blog does not exist",
+    "data": {}
+}
+```
+
+### DELETE Requests:
+
+Deleting a Blog:
+
+To delete the blog you want, you need to supply the ID in the DELETE request: ```http://localhost:3000/blogs/:blogId```
+
+Replace ":blogId" with the ID of the blog you are trying to delete!
+
+The expected response if the correct ID is supplied is as follows:
+```
+{
+    "timestamp": "26/09/2022, 19:24:15",
+    "statusCode": 200,
+    "httpStatus": "OK",
+    "message": "Blog 6331e526248e4e56794b8fcf has been Deleted!",
+    "data": {}
+}
+```
+
+Incase the blog does not exist, or an error has occured, the expected response will be:
+```
+{
+    "timestamp": "26/09/2022, 19:25:26",
+    "statusCode": 500,
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "message": "An error has occurred! or Blog does not exist!",
+    "data": {}
+}
+```
+
+## More Information:
+
+### MongoDB Setup using docker:
+
+The development of this API was aided by using a Docker mongoDb image!
+
+You may use the Docker compose file(mongo.yaml) in the root directory if you prefer to run they project like this.
+
+Otherwise please configure the mongo.config file to suit your mongoDb instance.
+
+## Reference
+
+
