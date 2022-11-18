@@ -13,13 +13,13 @@ services:
       - internalnet
 
   node:
-    image: blog-api:v2
-    restart: always
+    image: blog-api:v2.1
+    restart: unless-stopped
     build: .
     ports: 
-      - 3000:3000
+      - 5000:5000
     expose:
-      - 3000
+      - 5000
     depends_on:
       - mongodb
     networks:

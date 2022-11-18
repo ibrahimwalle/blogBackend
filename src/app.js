@@ -4,6 +4,9 @@ import cors from "cors";
 import { Response } from "./enum/response.enum.js";
 import { HttpResponse } from "./domain/response.js";
 import blogRoutes from "./routes/blog.routes.js";
+import * as dotenv from 'dotenv';
+
+dotenv.config()
 
 export class App {
     app;
@@ -11,7 +14,7 @@ export class App {
     ROUTE_NOT_FOUND = 'Route does not exist on this server';
 
     //App initialization
-    constructor(port = process.env.SERVER_PORT || 3000){
+    constructor(port = process.env.PORT || 5000){
         this.port = port;
         this.app = express();
         this.middleware();
