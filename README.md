@@ -5,25 +5,16 @@ Built with NodeJS, ExpressJS, and powered by a MongoDb noSQL database.
 
 ## DOCUMENTATION:
 
-### Set Up:
-
-- [ ] Make sure you have NodeJs installed on your machine!
-- [ ] Clone the project and run the install command: ```npm install```
-- [ ] Set up a mongoDB instance, and configure the mongo.config file accordingly! More details at the bottom of the docs.
-- [ ] Start the project by running the command: ```npm start```
-
 ## Making Requests: 
 
 The Default URI is 
-> http://localhost:3000
-
-You may change the port that the app listens to by supplying your preffered port in the constructor in the root index.js file!
+> https://ibrapi.net/
 
 ### POST Requests:
 
 Creating a Blog: 
 
-To create a blog you need to send a POST request to the relevant Endpoint: ```http://localhost:3000/blogs```
+To create a blog you need to send a POST request to the relevant Endpoint: ```https://ibrapi.net/blogs```
 
 The expected query is as follows: 
 ```
@@ -35,7 +26,7 @@ The expected query is as follows:
     authorImg: required:false, default: 'https://picsum.photos/200/200',
     imgUrl: required:false, default: 'https://picsum.photos/300/200',
 ```
-If the supplied query is sufficient and the database has been setup correctly, The expected response from API will be as follows:
+If the supplied query is sufficient, then the expected response from API will be as follows:
 ```
 {
     "timestamp": "26/09/2022, 18:45:10",
@@ -66,9 +57,7 @@ In case of an Error, the expected response will be:
     "data": {}
 }
 ```
-Make sure that you have supplied the correct query in that case, or that your MongoDb instance is running correctly!
-
-Error details are logged in the terminal for furthur inspection! 
+Make sure that you have supplied the correct query in that case, and if the problem still presists then post one the issues tab!
 
 ### GET Requests:
 
@@ -120,7 +109,7 @@ If any error may occur, the expected response will be:
 
 Fetching a specific blog using its ID:
 
-To fetch the blog you need, you need to supply the ID in the GET request: ```http://localhost:3000/blogs/:blogId```
+To fetch the blog you need, you need to supply the ID in the GET request: ```https://ibrapi.net/blogs/:blogId```
 
 Replace ":blogId" with the ID of the blog you are trying to fetch!
 
@@ -163,7 +152,7 @@ Incase the blog does not exist, or an error has occured, the expected response w
 Editing a Blog:
 
 
-To edit the blog you want, you need to supply the ID in the PUT request: ```http://localhost:3000/blogs/:blogId```
+To edit the blog you want, you need to supply the ID in the PUT request: ```https://ibrapi.net/blogs/:blogId```
 
 Replace ":blogId" with the ID of the blog you are trying to edit!
 
@@ -219,7 +208,7 @@ Incase the blog does not exist, or an error has occured, the expected response w
 
 Deleting a Blog:
 
-To delete the blog you want, you need to supply the ID in the DELETE request: ```http://localhost:3000/blogs/:blogId```
+To delete the blog you want, you need to supply the ID in the DELETE request: ```https://ibrapi.net/blogs/:blogId```
 
 Replace ":blogId" with the ID of the blog you are trying to delete!
 
@@ -247,11 +236,18 @@ Incase the blog does not exist, or an error has occured, the expected response w
 
 ## More Information:
 
+### Set Up in case you decide to run the app locally:
+
+- [ ] Make sure you have NodeJs installed on your machine!
+- [ ] Clone the project and run the install command: ```npm install```
+- [ ] Set up a mongoDB instance, and configure the mongo.config file accordingly! More details below.
+- [ ] Start the project by running the command: ```npm start```
+
 ### MongoDB Setup using docker:
 
-The development of this API was aided by using a Docker mongoDb image!
+The Database of this API was setup using a MongoDB Docker container! 
 
-You may use the Docker compose file(mongo.yaml) in the root directory if you prefer to run they project like this.
+You may use the Docker compose file(docker-compose.yaml) in the root directory if you prefer to run the project like I did.
 
 Otherwise please configure the mongo.config file to suit your mongoDb instance.
 
