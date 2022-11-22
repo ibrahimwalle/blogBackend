@@ -72,8 +72,7 @@ export const deleteBlog = async (req, res) => {
 //Create Blog 
 export const createBlog = async (req, res) => {
     console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} Request from ${req.rawHeaders[0]} ${req.rawHeaders[1]}`)
-    let newBlog = new Blog(req.query.title, req.query.body, req.query.category, req.query.author, req.query.authorTitle, req.query.authorImg, req.query.imgUrl);
-    // console.log(`query: ${JSON.stringify(req.query)}`);
+    let newBlog = new Blog(req.body.title, req.body.body, req.body.category, req.body.author, req.body.authorTitle, req.body.authorImg, req.body.imgUrl);
     try {
         const con = await connection();
         const result = await BlogModel.create(newBlog);
@@ -96,8 +95,7 @@ export const createBlog = async (req, res) => {
 //Edit Blog 
 export const editBlog = async (req, res) => {
     console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} Request from ${req.rawHeaders[0]} ${req.rawHeaders[1]}`)
-    let newBlog = new Blog(req.query.title, req.query.body, req.query.category, req.query.author, req.query.authorTitle, req.query.authorImg, req.query.imgUrl);
-    // console.log(`query: ${JSON.stringify(req.query)}, 'params': ${JSON.stringify(req.query)}`);
+    let newBlog = new Blog(req.body.title, req.body.body, req.body.category, req.body.author, req.body.authorTitle, req.body.authorImg, req.body.imgUrl);
     try {
         const con = await connection();
         const result = await BlogModel.findByIdAndUpdate(req.params.blogId, newBlog);

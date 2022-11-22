@@ -5,6 +5,7 @@ import { Response } from "./enum/response.enum.js";
 import { HttpResponse } from "./domain/response.js";
 import blogRoutes from "./routes/blog.routes.js";
 import * as dotenv from 'dotenv';
+import favicon from "serve-favicon";
 
 dotenv.config()
 
@@ -29,6 +30,8 @@ export class App {
     middleware(){
         this.app.use(cors({origin: '*'}));
         this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }))
+        this.app.use(favicon("src/static/blogging-bw.png"));
     }
 
     routes(){
