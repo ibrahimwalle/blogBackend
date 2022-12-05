@@ -5,7 +5,7 @@ Built with NodeJS, ExpressJS, and powered by a MongoDb noSQL database.
 
 ## DOCUMENTATION:
 
-This API is running on Digital Ocean server!
+This API is running on a Digital Ocean server!
 
 Incase it is down or misbehaving please consider posting about it in the issues tab!
 
