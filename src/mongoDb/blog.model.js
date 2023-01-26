@@ -9,7 +9,7 @@ const blogSchema = new Schema({
     author: {type: String, required:true},
     authorTitle: {type: String, default: 'Author'},
     authorImg: {type: String, default: 'https://picsum.photos/200/200'},
-    imgUrl: {type: String, default: 'https://picsum.photos/300/200'},
+    imgUrl: {type: String, default: 'https://picsum.photos/3000/2000'},
     postdate: {type: String, default: new Date().toLocaleString()}
 },{collection:'blogs'});
 
